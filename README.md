@@ -2,7 +2,7 @@ fsnotify is a Go library to provide cross-platform filesystem notifications on
 Windows, Linux, macOS, BSD, and illumos.
 
 Go 1.17 or newer is required; the full documentation is at
-https://pkg.go.dev/github.com/fsnotify/fsnotify
+https://pkg.go.dev/github.com/esvos/fsnotify
 
 ---
 
@@ -14,18 +14,18 @@ Platform support:
 | kqueue                | BSD, macOS | Supported                                                                 |
 | ReadDirectoryChangesW | Windows    | Supported                                                                 |
 | FEN                   | illumos    | Supported                                                                 |
-| fanotify              | Linux 5.9+ | [Not yet](https://github.com/fsnotify/fsnotify/issues/114)                |
+| fanotify              | Linux 5.9+ | [Not yet](https://github.com/esvos/fsnotify/issues/114)                |
 | AHAFS                 | AIX        | [aix branch]; experimental due to lack of maintainer and test environment |
 | FSEvents              | macOS      | [Needs support in x/sys/unix][fsevents]                                   |
 | USN Journals          | Windows    | [Needs support in x/sys/windows][usn]                                     |
-| Polling               | *All*      | [Not yet](https://github.com/fsnotify/fsnotify/issues/9)                  |
+| Polling               | *All*      | [Not yet](https://github.com/esvos/fsnotify/issues/9)                  |
 
 Linux and illumos should include Android and Solaris, but these are currently
 untested.
 
-[fsevents]:   https://github.com/fsnotify/fsnotify/issues/11#issuecomment-1279133120
-[usn]:        https://github.com/fsnotify/fsnotify/issues/53#issuecomment-1279829847
-[aix branch]: https://github.com/fsnotify/fsnotify/issues/353#issuecomment-1284590129
+[fsevents]:   https://github.com/esvos/fsnotify/issues/11#issuecomment-1279133120
+[usn]:        https://github.com/esvos/fsnotify/issues/53#issuecomment-1279829847
+[aix branch]: https://github.com/esvos/fsnotify/issues/353#issuecomment-1284590129
 
 Usage
 -----
@@ -37,7 +37,7 @@ package main
 import (
     "log"
 
-    "github.com/fsnotify/fsnotify"
+    "github.com/esvos/fsnotify"
 )
 
 func main() {
@@ -86,7 +86,7 @@ run with:
     % go run ./cmd/fsnotify
 
 Further detailed documentation can be found in godoc:
-https://pkg.go.dev/github.com/fsnotify/fsnotify
+https://pkg.go.dev/github.com/esvos/fsnotify
 
 FAQ
 ---
@@ -97,7 +97,7 @@ No, not unless you are watching the location it was moved to.
 No, you must add watches for any directory you want to watch (a recursive
 watcher is on the roadmap: [#18]).
 
-[#18]: https://github.com/fsnotify/fsnotify/issues/18
+[#18]: https://github.com/esvos/fsnotify/issues/18
 
 ### Do I have to watch the Error and Event channels in a goroutine?
 Yes. You can read both channels in the same goroutine using `select` (you don't
@@ -110,7 +110,7 @@ neither do the /proc and /sys virtual filesystems.
 
 This could be fixed with a polling watcher ([#9]), but it's not yet implemented.
 
-[#9]: https://github.com/fsnotify/fsnotify/issues/9
+[#9]: https://github.com/esvos/fsnotify/issues/9
 
 ### Why do I get many Chmod events?
 Some programs may generate a lot of attribute changes; for example Spotlight on
@@ -122,8 +122,8 @@ Spotlight indexing on macOS can result in multiple events (see [#15]). A
 temporary workaround is to add your folder(s) to the *Spotlight Privacy
 settings* until we have a native FSEvents implementation (see [#11]).
 
-[#11]: https://github.com/fsnotify/fsnotify/issues/11
-[#15]: https://github.com/fsnotify/fsnotify/issues/15
+[#11]: https://github.com/esvos/fsnotify/issues/11
+[#15]: https://github.com/esvos/fsnotify/issues/15
 
 ### Watching a file doesn't work well
 Watching individual files (rather than directories) is generally not recommended
