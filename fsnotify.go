@@ -216,7 +216,7 @@ const (
 	// waiting for Write events to stop. It's also faster (if you're not
 	// listening to Write events): copying a file of a few GB can easily
 	// generate tens of thousands of Write events in a short span of time.
-	xUnportableCloseWrite
+	UnportableCloseWrite
 
 	// File opened for reading was closed.
 	//
@@ -344,7 +344,7 @@ func (w *Watcher) WatchList() []string { return w.b.WatchList() }
 //
 // Create, Write, Remove, Rename, and Chmod are always supported. It can only
 // return false for an Op starting with Unportable.
-func (w *Watcher) xSupports(op Op) bool { return w.b.xSupports(op) }
+func (w *Watcher) Supports(op Op) bool { return w.b.xSupports(op) }
 
 func (o Op) String() string {
 	var b strings.Builder
@@ -363,7 +363,7 @@ func (o Op) String() string {
 	if o.Has(xUnportableRead) {
 		b.WriteString("|READ")
 	}
-	if o.Has(xUnportableCloseWrite) {
+	if o.Has(UnportableCloseWrite) {
 		b.WriteString("|CLOSE_WRITE")
 	}
 	if o.Has(xUnportableCloseRead) {
@@ -463,7 +463,7 @@ func WithBufferSize(bytes int) addOpt {
 //
 // AddWith returns an error when using an unportable operation that's not
 // supported. Use [Watcher.Support] to check for support.
-func withOps(op Op) addOpt {
+func WithOps(op Op) addOpt {
 	return func(opt *withOpts) { opt.op = op }
 }
 
